@@ -45,6 +45,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
+import org.breezyweather.BreezyWeather
 import org.breezyweather.R
 import org.breezyweather.common.basic.models.Location
 import org.breezyweather.common.bus.EventBus
@@ -95,6 +96,16 @@ class WeatherUpdateJob @AssistedInject constructor(
 
         // Exit early in case there is no network and Android still executes the job
         if (!context.isOnline()) {
+            return Result.retry()
+        }
+
+        // #441 - Android seems to call our job in loop in some rare cases
+        // Let’s backoff by 10 minutes if it’s been less than 5 minutes since last run
+        // Do not do this on debug version as it would make the "force weather update" impossible
+        if (!BreezyWeather.instance.debugMode
+            && SettingsManager.getInstance(context).weatherUpdateLastTimestamp != 0L
+            && SettingsManager.getInstance(context).weatherUpdateLastTimestamp > Date().time - 5 * 60 * 1000) {
+            LogHelper.log(msg = "WeatherUpdateJob already run on ${Date(SettingsManager.getInstance(context).weatherUpdateLastTimestamp)}, backing off by 10 minutes")
             return Result.retry()
         }
 
