@@ -368,6 +368,7 @@
     <string name="weather_source_accu_preference_hours_72">72시간</string>
     <string name="weather_source_accu_preference_hours_120">120시간</string>
     <string name="weather_source_accu_preference_hours_240">240시간</string>
+    <string name="weather_source_kma_source_name">대한민국 기상청</string>
     <string name="location_results_by">$ 제공 위치 결과</string>
     <string name="location_message_permission_missing">위치 접근 권한 없음</string>
     <string name="settings_background_updates_summary">새로고침 간격, 문제 해결</string>

@@ -33,6 +33,7 @@ import org.breezyweather.sources.china.ChinaService
 import org.breezyweather.sources.geonames.GeoNamesService
 import org.breezyweather.sources.here.HereService
 import org.breezyweather.sources.ipsb.IpSbLocationService
+import org.breezyweather.sources.kma.KmaWeatherService
 import org.breezyweather.sources.metno.MetNoService
 import org.breezyweather.sources.mf.MfService
 import org.breezyweather.sources.openmeteo.OpenMeteoService
@@ -53,7 +54,8 @@ class SourceManager @Inject constructor(
     mfService: MfService,
     openMeteoService: OpenMeteoService,
     openWeatherService: OpenWeatherService,
-    pirateWeatherService: PirateWeatherService
+    pirateWeatherService: PirateWeatherService,
+    kmaWeatherService: KmaWeatherService,
 ) {
     // TODO: Initialize lazily
     // The order of this list is preserved in "source chooser" dialogs
@@ -75,6 +77,7 @@ class SourceManager @Inject constructor(
         hereService,
         mfService,
         chinaService,
+        kmaWeatherService,
 
         // Secondary weather sources
         atmoAuraService
